@@ -1,6 +1,5 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 config();
 
@@ -17,9 +16,8 @@ const dataSource = new DataSource({
   type: 'postgres',
   synchronize: true,
   logging: true,
-  entities: [],
+  entities: ['src/domain/**/*.entity{.ts,.js}'],
   migrations: ['src/infra/db/typeorm/migrations/*.ts'],
-  namingStrategy: new SnakeNamingStrategy(),
 });
 
 export { dataSource, connectionOptions };
