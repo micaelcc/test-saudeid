@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
+import { Product } from '../products/product.entity';
 
 export type OrderStatus = 'canceled' | 'ok';
 
@@ -10,4 +11,8 @@ export class Order extends BaseEntity {
 
   @Column({ type: 'float' })
   totalValue: number;
+
+  @ManyToMany(() => Product)
+  @JoinTable({ name: 'orders_products' })
+  products: Product[];
 }
