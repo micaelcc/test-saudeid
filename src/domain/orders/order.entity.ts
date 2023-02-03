@@ -1,7 +1,7 @@
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 
-type OrderStatus = 'canceled' | 'ok';
+export type OrderStatus = 'canceled' | 'ok';
 
 @Entity('orders')
 export class Order extends BaseEntity {
