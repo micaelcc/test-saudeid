@@ -9,12 +9,14 @@ import { OrdersRepository } from './domain/orders/order.repository';
 import { ProductsRepository } from './domain/products/product.repository';
 import { TypeOrmProductsRepository } from './infra/db/typeorm/repositories/product.repository';
 import { GetProductsByIdsUseCase } from './use-cases/get-products-by-ids.usecase';
+import { CancelOrderUseCase } from './use-cases/cancel-order.usecase';
 @Module({
   imports: [TypeOrmModule.forRoot(typeOrmConfig)],
   controllers: [OrdersController],
   providers: [
     CreateOrderUseCase,
     GetProductsByIdsUseCase,
+    CancelOrderUseCase,
     { provide: OrdersRepository, useClass: TypeOrmOrderRepository },
     { provide: ProductsRepository, useClass: TypeOrmProductsRepository },
   ],
