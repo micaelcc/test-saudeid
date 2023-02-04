@@ -9,6 +9,7 @@ import { HttpException } from '@nestjs/common';
 import { CancelOrderUseCase } from '../../../use-cases/cancel-order.usecase';
 import { randomUUID } from 'crypto';
 import { ORDERS_MOCK } from '../../../infra/db/typeorm/repositories/tests/mocks/orders';
+import { UpdateOrderUseCase } from 'src/use-cases/update-order.usecase';
 
 describe('OrdersController', () => {
   let sut: OrdersController;
@@ -18,6 +19,7 @@ describe('OrdersController', () => {
   let createOrderUseCase: CreateOrderUseCase;
   let getProductsByIdsUseCase: GetProductsByIdsUseCase;
   let cancelOrderUseCase: CancelOrderUseCase;
+  let updateOrderUseCase: UpdateOrderUseCase;
 
   beforeAll(() => {
     ordersRepositoryStub = new OrdersRepositoryStub();
@@ -35,10 +37,13 @@ describe('OrdersController', () => {
       productsRepositoryStub,
     );
 
+    updateOrderUseCase = new UpdateOrderUseCase(ordersRepositoryStub);
+
     sut = new OrdersController(
       createOrderUseCase,
       getProductsByIdsUseCase,
       cancelOrderUseCase,
+      updateOrderUseCase,
     );
   });
 
