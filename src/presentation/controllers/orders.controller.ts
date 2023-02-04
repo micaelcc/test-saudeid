@@ -9,7 +9,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { UpdateOrderUseCase } from 'src/use-cases/update-order.usecase';
+import { UpdateOrderUseCase } from '../../use-cases/update-order.usecase';
 import { CancelOrderUseCase } from '../../use-cases/cancel-order.usecase';
 import { CreateOrderUseCase } from '../../use-cases/create-order.usecase';
 import { GetProductsByIdsUseCase } from '../../use-cases/get-products-by-ids.usecase';

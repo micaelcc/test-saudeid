@@ -9,7 +9,7 @@ import { HttpException } from '@nestjs/common';
 import { CancelOrderUseCase } from '../../../use-cases/cancel-order.usecase';
 import { randomUUID } from 'crypto';
 import { ORDERS_MOCK } from '../../../infra/db/typeorm/repositories/tests/mocks/orders';
-import { UpdateOrderUseCase } from 'src/use-cases/update-order.usecase';
+import { UpdateOrderUseCase } from '../../../use-cases/update-order.usecase';
 
 describe('OrdersController', () => {
   let sut: OrdersController;
@@ -21,7 +21,7 @@ describe('OrdersController', () => {
   let cancelOrderUseCase: CancelOrderUseCase;
   let updateOrderUseCase: UpdateOrderUseCase;
 
-  beforeAll(() => {
+  beforeEach(() => {
     ordersRepositoryStub = new OrdersRepositoryStub();
     productsRepositoryStub = new ProductsRepositoryStub();
 
@@ -103,6 +103,54 @@ describe('OrdersController', () => {
 
       expect(cancelOrderUseCaseSpy).toHaveBeenCalledTimes(1);
       expect(cancelOrderUseCaseSpy).toBeCalledWith(fakeId);
+    });
+  });
+
+  describe('updateOrder', () => {
+    test('Should call get products use case with correct values', async () => {
+      const getProductsUseCaseSpy = jest.spyOn(
+        getProductsByIdsUseCase,
+        'execute',
+      );
+
+      const ids = ['specified_id'];
+      await sut.create({ products: ids });
+
+      expect(getProductsUseCaseSpy).toHaveBeenCalledTimes(1);
+      expect(getProductsUseCaseSpy).toHaveBeenCalledWith(ids);
+    });
+
+    test('Should call update order use case with correct values', async () => {
+      const updateOrderUseCaseSpy = jest.spyOn(updateOrderUseCase, 'execute');
+
+      jest
+        .spyOn(getProductsByIdsUseCase, 'execute')
+        .mockReturnValue(Promise.resolve(PRODUCTS_MOCK));
+
+      const ids = ['any_id', 'any_id_1', 'any_id_2'];
+
+      await sut.update({ products: ids }, { id: 'any_id' });
+
+      expect(updateOrderUseCaseSpy).toHaveBeenCalledTimes(1);
+      expect(updateOrderUseCaseSpy).toHaveBeenCalledWith({
+        id: 'any_id',
+        data: { products: PRODUCTS_MOCK },
+      });
+    });
+
+    test('Should throw if some product dont exists', async () => {
+      jest
+        .spyOn(getProductsByIdsUseCase, 'execute')
+        .mockImplementationOnce(() => Promise.resolve([]));
+
+      const ids = ['specified_id'];
+
+      try {
+        await sut.create({ products: ids });
+      } catch (error) {
+        expect(error).toBeInstanceOf(HttpException);
+        expect(error.message).toBe(new ProductDontExists().message);
+      }
     });
   });
 });
