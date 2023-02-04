@@ -25,14 +25,25 @@ class OrdersRepositoryStub implements OrdersRepository {
   update(updateOrder: Order): Promise<void> {
     const order = this.orders.find((order) => order.id === updateOrder.id);
 
-    order.products = updateOrder.products;
-    order.status = updateOrder.status;
+    if (order.products) {
+      order.products = updateOrder.products;
+    }
+
+    if (order.status) {
+      order.status = updateOrder.status;
+    }
 
     return;
   }
 
   getAll(): Promise<Order[]> {
     return Promise.resolve(this.orders);
+  }
+
+  findById(id: string): Promise<Order> {
+    const order = this.orders.find((order) => order.id === id);
+
+    return Promise.resolve(order);
   }
 }
 
