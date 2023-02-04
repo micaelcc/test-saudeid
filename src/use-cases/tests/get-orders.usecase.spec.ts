@@ -5,7 +5,6 @@ import { OrdersRepositoryStub } from './mocks/orders-repository-stub';
 
 describe('GetOrdersUseCase', () => {
   let sut: GetOrdersUseCase;
-  const PRODUCT_MOCK = { name: 'any_name', unitPrice: 10 };
   const ordersRepositoryStub = new OrdersRepositoryStub();
   const payload: GetOrdersDTO = { filters: { status: 'ok' } };
 
