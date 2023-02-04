@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { GetProductsByIdsUseCase } from './get-products-by-ids.usecase';
+import { GetProductsByIdsUseCase } from '../get-products-by-ids.usecase';
 import { ProductsRepositoryStub } from './mocks/products-repository-stub';
 
 describe('GetProductsByIdsUseCase', () => {

@@ -1,8 +1,8 @@
 import { EntityManager, In } from 'typeorm';
-import { DATA_SOURCE_MOCK } from '../mocks/data-source';
-import { TypeOrmProductsRepository } from './product.repository';
-import { PRODUCTS_MOCK } from '../mocks/products';
-import { Product } from '../../../../domain/products/product.entity';
+import { DATA_SOURCE_MOCK } from './mocks/data-source';
+import { TypeOrmProductsRepository } from '../product.repository';
+import { PRODUCTS_MOCK } from './mocks/products';
+import { Product } from '../../../../../domain/products/product.entity';
 
 describe('ProductsRepository', () => {
   let sut: TypeOrmProductsRepository;
