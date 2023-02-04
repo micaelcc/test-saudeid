@@ -20,7 +20,7 @@ describe('OrdersRepository', () => {
     });
 
     it('Should return all orders', async () => {
-      const orders = await sut.getAll();
+      const orders = await sut.getAll({ filters: {} });
 
       expect(orders).toBeDefined();
       expect(orders).toEqual(ORDERS_MOCK);
@@ -46,7 +46,7 @@ describe('OrdersRepository', () => {
 
   describe('update', () => {
     beforeAll(() => {
-      jest.spyOn(entityManagerMock, 'update').mockImplementation(jest.fn());
+      jest.spyOn(entityManagerMock, 'preload').mockImplementation(jest.fn());
     });
 
     it('Should call manager.update with correct values', async () => {
@@ -54,10 +54,10 @@ describe('OrdersRepository', () => {
 
       await sut.update(order);
 
-      const updateSpy = jest.spyOn(entityManagerMock, 'update');
+      const updateSpy = jest.spyOn(entityManagerMock, 'preload');
 
       expect(updateSpy).toHaveBeenCalledTimes(1);
-      expect(updateSpy).toHaveBeenCalledWith(Order, order.id, order);
+      expect(updateSpy).toHaveBeenCalledWith(Order, order);
     });
   });
 });
