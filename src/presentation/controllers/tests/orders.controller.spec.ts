@@ -7,37 +7,42 @@ import { ProductsRepositoryStub } from '../../../use-cases/tests/mocks/products-
 import { OrdersController } from '../orders.controller';
 import { HttpException } from '@nestjs/common';
 import { CancelOrderUseCase } from '../../../use-cases/cancel-order.usecase';
+import { randomUUID } from 'crypto';
+import { ORDERS_MOCK } from '../../../infra/db/typeorm/repositories/tests/mocks/orders';
 
 describe('OrdersController', () => {
   let sut: OrdersController;
+  const [ORDER_MOCK] = ORDERS_MOCK;
   let ordersRepositoryStub: OrdersRepositoryStub;
   let productsRepositoryStub: ProductsRepositoryStub;
   let createOrderUseCase: CreateOrderUseCase;
   let getProductsByIdsUseCase: GetProductsByIdsUseCase;
   let cancelOrderUseCase: CancelOrderUseCase;
 
+  beforeAll(() => {
+    ordersRepositoryStub = new OrdersRepositoryStub();
+    productsRepositoryStub = new ProductsRepositoryStub();
+
+    productsRepositoryStub.create(PRODUCTS_MOCK[0]);
+
+    cancelOrderUseCase = new CancelOrderUseCase(ordersRepositoryStub);
+
+    ordersRepositoryStub.create(ORDER_MOCK);
+
+    createOrderUseCase = new CreateOrderUseCase(ordersRepositoryStub);
+
+    getProductsByIdsUseCase = new GetProductsByIdsUseCase(
+      productsRepositoryStub,
+    );
+
+    sut = new OrdersController(
+      createOrderUseCase,
+      getProductsByIdsUseCase,
+      cancelOrderUseCase,
+    );
+  });
+
   describe('create', () => {
-    beforeAll(() => {
-      ordersRepositoryStub = new OrdersRepositoryStub();
-      productsRepositoryStub = new ProductsRepositoryStub();
-
-      productsRepositoryStub.create(PRODUCTS_MOCK[0]);
-
-      cancelOrderUseCase = new CancelOrderUseCase(ordersRepositoryStub);
-
-      createOrderUseCase = new CreateOrderUseCase(ordersRepositoryStub);
-
-      getProductsByIdsUseCase = new GetProductsByIdsUseCase(
-        productsRepositoryStub,
-      );
-
-      sut = new OrdersController(
-        createOrderUseCase,
-        getProductsByIdsUseCase,
-        cancelOrderUseCase,
-      );
-    });
-
     test('Should call get products use case with correct values', async () => {
       const getProductsUseCaseSpyOn = jest.spyOn(
         getProductsByIdsUseCase,
@@ -78,6 +83,21 @@ describe('OrdersController', () => {
         expect(error).toBeInstanceOf(HttpException);
         expect(error.message).toBe(new ProductDontExists().message);
       }
+    });
+  });
+
+  describe('cancelOrder', () => {
+    test('Should call cancelOrder usecase with correct values', async () => {
+      const cancelOrderUseCaseSpy = jest
+        .spyOn(cancelOrderUseCase, 'execute')
+        .mockImplementationOnce(jest.fn());
+
+      const fakeId = randomUUID();
+
+      await sut.cancelOrder({ id: fakeId });
+
+      expect(cancelOrderUseCaseSpy).toHaveBeenCalledTimes(1);
+      expect(cancelOrderUseCaseSpy).toBeCalledWith(fakeId);
     });
   });
 });
