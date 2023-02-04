@@ -4,6 +4,7 @@ import {
   HttpCode,
   HttpException,
   HttpStatus,
+  Param,
   Patch,
   Post,
   Req,
@@ -14,6 +15,10 @@ import { CreateOrderUseCase } from '../../use-cases/create-order.usecase';
 import { GetProductsByIdsUseCase } from '../../use-cases/get-products-by-ids.usecase';
 import { ProductDontExists } from '../errors/ProductDontExists.error';
 import { CreateOrderValidator } from '../validators/create-order.validator';
+
+type CancelOrderRequest = {
+  id: string;
+};
 
 @Controller('/orders')
 class OrdersController {
@@ -44,9 +49,9 @@ class OrdersController {
 
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async cancelOrder(@Req() request: Request): Promise<void> {
+  public async cancelOrder(@Param() params: CancelOrderRequest): Promise<void> {
     try {
-      const { id } = request.params;
+      const { id } = params;
 
       await this.cancelOrderUseCase.execute(id);
     } catch (error) {
