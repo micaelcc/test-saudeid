@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpException,
   HttpStatus,
@@ -8,6 +9,7 @@ import {
   Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { UpdateOrderUseCase } from '../../use-cases/update-order.usecase';
 import { CancelOrderUseCase } from '../../use-cases/cancel-order.usecase';
@@ -15,6 +17,9 @@ import { CreateOrderUseCase } from '../../use-cases/create-order.usecase';
 import { GetProductsByIdsUseCase } from '../../use-cases/get-products-by-ids.usecase';
 import { ProductDontExists } from '../errors/ProductDontExists.error';
 import { CreateOrderValidator } from '../validators/create-order.validator';
+import { Order } from 'src/domain/orders/order.entity';
+import { GetOrdersUseCase } from '../../use-cases/get-orders.usecase';
+import { GetOrdersValidator } from '../validators/get-orders.validator';
 
 type CancelOrderRequest = {
   id: string;
@@ -29,6 +34,7 @@ class OrdersController {
     private getProductsByIds: GetProductsByIdsUseCase,
     private cancelOrderUseCase: CancelOrderUseCase,
     private updateOrderUseCase: UpdateOrderUseCase,
+    private getOrdersUseCase: GetOrdersUseCase,
   ) {}
 
   @Post()
@@ -90,6 +96,12 @@ class OrdersController {
         error.status || HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  public async getAll(@Query() params: GetOrdersValidator): Promise<Order[]> {
+    return this.getOrdersUseCase.execute({ filters: { ...params } });
   }
 }
 
