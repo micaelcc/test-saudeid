@@ -6,6 +6,7 @@ import { OrdersRepositoryStub } from '../../../use-cases/tests/mocks/orders-repo
 import { ProductsRepositoryStub } from '../../../use-cases/tests/mocks/products-repository-stub';
 import { OrdersController } from '../orders.controller';
 import { HttpException } from '@nestjs/common';
+import { CancelOrderUseCase } from '../../../use-cases/cancel-order.usecase';
 
 describe('OrdersController', () => {
   let sut: OrdersController;
@@ -13,6 +14,7 @@ describe('OrdersController', () => {
   let productsRepositoryStub: ProductsRepositoryStub;
   let createOrderUseCase: CreateOrderUseCase;
   let getProductsByIdsUseCase: GetProductsByIdsUseCase;
+  let cancelOrderUseCase: CancelOrderUseCase;
 
   describe('create', () => {
     beforeAll(() => {
@@ -21,13 +23,19 @@ describe('OrdersController', () => {
 
       productsRepositoryStub.create(PRODUCTS_MOCK[0]);
 
+      cancelOrderUseCase = new CancelOrderUseCase(ordersRepositoryStub);
+
       createOrderUseCase = new CreateOrderUseCase(ordersRepositoryStub);
 
       getProductsByIdsUseCase = new GetProductsByIdsUseCase(
         productsRepositoryStub,
       );
 
-      sut = new OrdersController(createOrderUseCase, getProductsByIdsUseCase);
+      sut = new OrdersController(
+        createOrderUseCase,
+        getProductsByIdsUseCase,
+        cancelOrderUseCase,
+      );
     });
 
     test('Should call get products use case with correct values', async () => {
