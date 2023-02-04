@@ -11,6 +11,7 @@ import { randomUUID } from 'crypto';
 import { ORDERS_MOCK } from '../../../infra/db/typeorm/repositories/tests/mocks/orders';
 import { UpdateOrderUseCase } from '../../../use-cases/update-order.usecase';
 import { GetOrdersUseCase } from '../../../use-cases/get-orders.usecase';
+import { GetOrdersValidator } from 'src/presentation/validators/get-orders.validator';
 
 describe('OrdersController', () => {
   let sut: OrdersController;
@@ -40,6 +41,8 @@ describe('OrdersController', () => {
     );
 
     updateOrderUseCase = new UpdateOrderUseCase(ordersRepositoryStub);
+
+    getOrdersUseCase = new GetOrdersUseCase(ordersRepositoryStub);
 
     sut = new OrdersController(
       createOrderUseCase,
@@ -154,6 +157,27 @@ describe('OrdersController', () => {
         expect(error).toBeInstanceOf(HttpException);
         expect(error.message).toBe(new ProductDontExists().message);
       }
+    });
+  });
+
+  describe('getAll', () => {
+    test('Should call get orders use case with correct values', async () => {
+      const getOrdersUseCaseSpy = jest
+        .spyOn(getOrdersUseCase, 'execute')
+        .mockImplementationOnce(jest.fn());
+
+      const queryParams: GetOrdersValidator = {
+        limit: 10,
+        orderBy: 'createdAt',
+        status: 'ok',
+      };
+
+      await sut.getAll(queryParams);
+
+      expect(getOrdersUseCaseSpy).toHaveBeenCalledTimes(1);
+      expect(getOrdersUseCaseSpy).toHaveBeenCalledWith({
+        filters: queryParams,
+      });
     });
   });
 });
