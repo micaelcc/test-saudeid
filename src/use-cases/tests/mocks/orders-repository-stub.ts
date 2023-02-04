@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import { Order } from 'src/domain/orders/order.entity';
 import { OrdersRepository } from 'src/domain/orders/order.repository';
 import { CreateOrderDTO } from 'src/shared/dtos/create-order.dto';
+import { GetOrdersDTO } from 'src/shared/dtos/get-orders.dto';
 
 class OrdersRepositoryStub implements OrdersRepository {
   private readonly orders: Order[];
@@ -36,8 +37,12 @@ class OrdersRepositoryStub implements OrdersRepository {
     return;
   }
 
-  getAll(): Promise<Order[]> {
-    return Promise.resolve(this.orders);
+  getAll({ filters }: GetOrdersDTO): Promise<Order[]> {
+    const orders = this.orders.filter(
+      (order) => order.status === filters.status,
+    );
+
+    return Promise.resolve(orders);
   }
 
   findById(id: string): Promise<Order> {
