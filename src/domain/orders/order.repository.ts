@@ -5,6 +5,7 @@ export interface OrdersRepository {
   create: (order: CreateOrderDTO) => Promise<void>;
   update: (updateOrder: Order) => Promise<void>;
   getAll: () => Promise<Order[]>;
+  findById: (id: string) => Promise<Order>;
 }
 
 export const OrdersRepository = Symbol('OrdersRepository');

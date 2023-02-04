@@ -14,9 +14,12 @@ class TypeOrmOrderRepository implements OrdersRepository {
   }
 
   async getAll(): Promise<Order[]> {
-    return await this.manager.find(Order);
+    return this.manager.find(Order);
   }
 
+  async findById(id: string): Promise<Order> {
+    return this.manager.findOne(Order, { where: { id } });
+  }
   async create(order: CreateOrderDTO): Promise<void> {
     await this.manager.save(Order, order);
   }
