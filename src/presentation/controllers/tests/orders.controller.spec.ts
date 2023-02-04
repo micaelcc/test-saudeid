@@ -10,6 +10,7 @@ import { CancelOrderUseCase } from '../../../use-cases/cancel-order.usecase';
 import { randomUUID } from 'crypto';
 import { ORDERS_MOCK } from '../../../infra/db/typeorm/repositories/tests/mocks/orders';
 import { UpdateOrderUseCase } from '../../../use-cases/update-order.usecase';
+import { GetOrdersUseCase } from '../../../use-cases/get-orders.usecase';
 
 describe('OrdersController', () => {
   let sut: OrdersController;
@@ -20,6 +21,7 @@ describe('OrdersController', () => {
   let getProductsByIdsUseCase: GetProductsByIdsUseCase;
   let cancelOrderUseCase: CancelOrderUseCase;
   let updateOrderUseCase: UpdateOrderUseCase;
+  let getOrdersUseCase: GetOrdersUseCase;
 
   beforeEach(() => {
     ordersRepositoryStub = new OrdersRepositoryStub();
@@ -44,6 +46,7 @@ describe('OrdersController', () => {
       getProductsByIdsUseCase,
       cancelOrderUseCase,
       updateOrderUseCase,
+      getOrdersUseCase,
     );
   });
 
