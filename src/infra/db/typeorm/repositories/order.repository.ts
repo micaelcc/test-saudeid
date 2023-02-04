@@ -10,7 +10,9 @@ class TypeOrmOrderRepository implements OrdersRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
   async update(order: Order): Promise<void> {
-    await this.manager.update(Order, order.id, order);
+    const updateOrder = await this.manager.preload(Order, order);
+
+    await this.manager.save(Order, updateOrder);
   }
 
   async getAll(): Promise<Order[]> {

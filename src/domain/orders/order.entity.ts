@@ -12,7 +12,10 @@ export class Order extends BaseEntity {
   @Column({ type: 'float' })
   totalValue: number;
 
-  @ManyToMany(() => Product)
+  @ManyToMany(() => Product, {
+    cascade: true,
+    eager: true,
+  })
   @JoinTable({ name: 'orders_products' })
   products: Product[];
 }
