@@ -6,8 +6,8 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
-import { CreateOrderUseCase } from 'src/use-cases/create-order.usecase';
-import { GetProductsByIdsUseCase } from 'src/use-cases/get-products-by-ids.usecase';
+import { CreateOrderUseCase } from '../../use-cases/create-order.usecase';
+import { GetProductsByIdsUseCase } from '../../use-cases/get-products-by-ids.usecase';
 import { ProductDontExists } from '../errors/ProductDontExists.error';
 import { CreateOrderValidator } from '../validators/create-order.validator';
 
