@@ -1,5 +1,5 @@
-import { ORDERS_MOCK } from '../../infra/db/typeorm/repositories/tests/mocks/orders';
-import { GetOrdersDTO } from 'src/shared/dtos/get-orders.dto';
+import { ORDERS_MOCK } from '@/infra/db/typeorm/repositories/tests/mocks/orders';
+import { GetOrdersDTO } from '@/shared/dtos/get-orders.dto';
 import { GetOrdersUseCase } from '../get-orders.usecase';
 import { OrdersRepositoryStub } from './mocks/orders-repository-stub';
 

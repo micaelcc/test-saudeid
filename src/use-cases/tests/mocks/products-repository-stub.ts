@@ -1,6 +1,6 @@
-import { Product } from 'src/domain/products/product.entity';
-import { ProductsRepository } from 'src/domain/products/product.repository';
-import { CreateProductDTO } from 'src/shared/dtos/create-product.dto';
+import { Product } from '@/domain/products/product.entity';
+import { ProductsRepository } from '@/domain/products/product.repository';
+import { CreateProductDTO } from '@/shared/dtos/create-product.dto';
 
 class ProductsRepositoryStub implements ProductsRepository {
   private readonly products: Product[];

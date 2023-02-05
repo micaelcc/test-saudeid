@@ -1,5 +1,5 @@
-import { OrderStatus } from 'src/domain/orders/order.entity';
-import { Product } from 'src/domain/products/product.entity';
+import { OrderStatus } from '@/domain/orders/order.entity';
+import { Product } from '@/domain/products/product.entity';
 
 export type CreateOrderDTO = {
   products: Product[];

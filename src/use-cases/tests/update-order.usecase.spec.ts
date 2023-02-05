@@ -1,5 +1,5 @@
-import { PRODUCTS_MOCK } from '../../infra/db/typeorm/repositories/tests/mocks/products';
-import { ORDERS_MOCK } from '../../infra/db/typeorm/repositories/tests/mocks/orders';
+import { PRODUCTS_MOCK } from '@/infra/db/typeorm/repositories/tests/mocks/products';
+import { ORDERS_MOCK } from '@/infra/db/typeorm/repositories/tests/mocks/orders';
 import { UpdateOrderUseCase } from '../update-order.usecase';
 import { OrdersRepositoryStub } from './mocks/orders-repository-stub';
 

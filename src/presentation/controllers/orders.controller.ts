@@ -11,14 +11,14 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { UpdateOrderUseCase } from '../../use-cases/update-order.usecase';
-import { CancelOrderUseCase } from '../../use-cases/cancel-order.usecase';
-import { CreateOrderUseCase } from '../../use-cases/create-order.usecase';
-import { GetProductsByIdsUseCase } from '../../use-cases/get-products-by-ids.usecase';
+import { UpdateOrderUseCase } from '@/use-cases/update-order.usecase';
+import { CancelOrderUseCase } from '@/use-cases/cancel-order.usecase';
+import { CreateOrderUseCase } from '@/use-cases/create-order.usecase';
+import { GetProductsByIdsUseCase } from '@/use-cases/get-products-by-ids.usecase';
 import { ProductDontExists } from '../errors/ProductDontExists.error';
 import { CreateOrderValidator } from '../validators/create-order.validator';
-import { Order } from 'src/domain/orders/order.entity';
-import { GetOrdersUseCase } from '../../use-cases/get-orders.usecase';
+import { Order } from '@/domain/orders/order.entity';
+import { GetOrdersUseCase } from '@/use-cases/get-orders.usecase';
 import { GetOrdersValidator } from '../validators/get-orders.validator';
 
 type CancelOrderRequest = {

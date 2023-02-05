@@ -1,4 +1,4 @@
-import { OrderStatus } from 'src/domain/orders/order.entity';
+import { OrderStatus } from '@/domain/orders/order.entity';
 
 export type OrderByFields = 'createdAt' | 'updatedAt' | 'id';
 

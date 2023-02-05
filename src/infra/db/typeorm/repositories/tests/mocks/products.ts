@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { Product } from 'src/domain/products/product.entity';
+import { Product } from '@/domain/products/product.entity';
 
 export const PRODUCTS_MOCK: Product[] = [
   {

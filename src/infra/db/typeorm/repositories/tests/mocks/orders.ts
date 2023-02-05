@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { Order } from 'src/domain/orders/order.entity';
+import { Order } from '@/domain/orders/order.entity';
 
 export const ORDERS_MOCK: Order[] = [
   {

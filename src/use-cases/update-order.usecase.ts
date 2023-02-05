@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { UpdateOrderDTO } from 'src/shared/dtos/update-order.dto';
+import { UpdateOrderDTO } from '@/shared/dtos/update-order.dto';
 
-import { OrdersRepository } from '../domain/orders/order.repository';
+import { OrdersRepository } from '@/domain/orders/order.repository';
 
 class UpdateOrderUseCase {
   constructor(

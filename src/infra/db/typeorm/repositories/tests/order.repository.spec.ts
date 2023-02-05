@@ -2,7 +2,7 @@ import { EntityManager } from 'typeorm';
 import { DATA_SOURCE_MOCK } from './mocks/data-source';
 import { ORDERS_MOCK } from './mocks/orders';
 import { TypeOrmOrderRepository } from '../order.repository';
-import { Order } from '../../../../../domain/orders/order.entity';
+import { Order } from '@/domain/orders/order.entity';
 
 describe('OrdersRepository', () => {
   let sut: TypeOrmOrderRepository;

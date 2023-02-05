@@ -1,17 +1,17 @@
-import { ProductDontExists } from '../../../presentation/errors/ProductDontExists.error';
-import { PRODUCTS_MOCK } from '../../../infra/db/typeorm/repositories/tests/mocks/products';
-import { CreateOrderUseCase } from '../../../use-cases/create-order.usecase';
-import { GetProductsByIdsUseCase } from '../../../use-cases/get-products-by-ids.usecase';
-import { OrdersRepositoryStub } from '../../../use-cases/tests/mocks/orders-repository-stub';
-import { ProductsRepositoryStub } from '../../../use-cases/tests/mocks/products-repository-stub';
+import { ProductDontExists } from '@/presentation/errors/ProductDontExists.error';
+import { PRODUCTS_MOCK } from '@/infra/db/typeorm/repositories/tests/mocks/products';
+import { CreateOrderUseCase } from '@/use-cases/create-order.usecase';
+import { GetProductsByIdsUseCase } from '@/use-cases/get-products-by-ids.usecase';
+import { OrdersRepositoryStub } from '@/use-cases/tests/mocks/orders-repository-stub';
+import { ProductsRepositoryStub } from '@/use-cases/tests/mocks/products-repository-stub';
 import { OrdersController } from '../orders.controller';
 import { HttpException } from '@nestjs/common';
-import { CancelOrderUseCase } from '../../../use-cases/cancel-order.usecase';
+import { CancelOrderUseCase } from '@/use-cases/cancel-order.usecase';
 import { randomUUID } from 'crypto';
-import { ORDERS_MOCK } from '../../../infra/db/typeorm/repositories/tests/mocks/orders';
-import { UpdateOrderUseCase } from '../../../use-cases/update-order.usecase';
-import { GetOrdersUseCase } from '../../../use-cases/get-orders.usecase';
-import { GetOrdersValidator } from 'src/presentation/validators/get-orders.validator';
+import { ORDERS_MOCK } from '@/infra/db/typeorm/repositories/tests/mocks/orders';
+import { UpdateOrderUseCase } from '@/use-cases/update-order.usecase';
+import { GetOrdersUseCase } from '@/use-cases/get-orders.usecase';
+import { GetOrdersValidator } from '@/presentation/validators/get-orders.validator';
 
 describe('OrdersController', () => {
   let sut: OrdersController;

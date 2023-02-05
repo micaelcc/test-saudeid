@@ -1,4 +1,4 @@
-import { CreateProductDTO } from 'src/shared/dtos/create-product.dto';
+import { CreateProductDTO } from '@/shared/dtos/create-product.dto';
 import { Product } from './product.entity';
 
 export interface ProductsRepository {

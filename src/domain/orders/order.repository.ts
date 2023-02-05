@@ -1,5 +1,6 @@
-import { CreateOrderDTO } from 'src/shared/dtos/create-order.dto';
-import { GetOrdersDTO } from 'src/shared/dtos/get-orders.dto';
+import { CreateOrderDTO } from '@/shared/dtos/create-order.dto';
+import { GetOrdersDTO } from '@/shared/dtos/get-orders.dto';
+
 import { Order } from './order.entity';
 
 export interface OrdersRepository {

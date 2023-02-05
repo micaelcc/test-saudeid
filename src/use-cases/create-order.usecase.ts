@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
-import { OrdersRepository } from '../domain/orders/order.repository';
-import { Product } from '../domain/products/product.entity';
+import { OrdersRepository } from '@/domain/orders/order.repository';
+import { Product } from '@/domain/products/product.entity';
 
 class CreateOrderUseCase {
   constructor(

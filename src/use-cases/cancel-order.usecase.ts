@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 
-import { OrdersRepository } from '../domain/orders/order.repository';
+import { OrdersRepository } from '@/domain/orders/order.repository';
 
 class CancelOrderUseCase {
   constructor(

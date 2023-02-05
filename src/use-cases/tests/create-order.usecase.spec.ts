@@ -1,4 +1,4 @@
-import { PRODUCTS_MOCK } from '../../infra/db/typeorm/repositories/tests/mocks/products';
+import { PRODUCTS_MOCK } from '@/infra/db/typeorm/repositories/tests/mocks/products';
 import { CreateOrderUseCase } from '../create-order.usecase';
 import { OrdersRepositoryStub } from './mocks/orders-repository-stub';
 

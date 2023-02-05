@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
-import { Order } from '../../../../domain/orders/order.entity';
-import { OrdersRepository } from 'src/domain/orders/order.repository';
-import { CreateOrderDTO } from 'src/shared/dtos/create-order.dto';
+import { Order } from '@/domain/orders/order.entity';
+import { OrdersRepository } from '@/domain/orders/order.repository';
+import { CreateOrderDTO } from '@/shared/dtos/create-order.dto';
 import { EntityManager } from 'typeorm';
-import { GetOrdersDTO } from 'src/shared/dtos/get-orders.dto';
+import { GetOrdersDTO } from '@/shared/dtos/get-orders.dto';
 
 @Injectable()
 class TypeOrmOrderRepository implements OrdersRepository {

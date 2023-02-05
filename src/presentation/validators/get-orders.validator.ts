@@ -1,6 +1,6 @@
 import { IsOptional, Validate } from 'class-validator';
-import { OrderStatus } from 'src/domain/orders/order.entity';
-import { OrderByFields } from 'src/shared/dtos/get-orders.dto';
+import { OrderStatus } from '@/domain/orders/order.entity';
+import { OrderByFields } from '@/shared/dtos/get-orders.dto';
 import {
   ValidateOrderByFilter,
   ValidateStatusFilter,

@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { Product } from 'src/domain/products/product.entity';
-import { ProductsRepository } from '../domain/products/product.repository';
+import { Product } from '@/domain/products/product.entity';
+import { ProductsRepository } from '@/domain/products/product.repository';
 
 class GetProductsByIdsUseCase {
   constructor(
