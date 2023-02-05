@@ -58,6 +58,14 @@ services:
     networks:
       - test-saudeid-network
 
+  stock-ms:
+    build: ./services/stock
+    depends_on:
+      - kafka
+      - redis
+    networks:
+      - test-saudeid-network
+
   redis:
     image: redis:alpine
     restart: always
