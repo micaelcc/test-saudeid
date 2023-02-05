@@ -13,6 +13,7 @@ import { UpdateOrderUseCase } from '@/use-cases/update-order.usecase';
 import { GetOrdersUseCase } from '@/use-cases/get-orders.usecase';
 import { GetOrdersValidator } from '@/presentation/validators/get-orders.validator';
 import { ClientKafka } from '@nestjs/microservices';
+import { Order } from '@/domain/orders/order.entity';
 
 describe('OrdersController', () => {
   let sut: OrdersController;
@@ -131,6 +132,27 @@ describe('OrdersController', () => {
       expect(cancelOrderUseCaseSpy).toHaveBeenCalledTimes(1);
       expect(cancelOrderUseCaseSpy).toBeCalledWith(fakeId);
     });
+
+    test('Should publish message on kafka client on success', async () => {
+      const clientKafkaSpy = jest.spyOn(clientKafka, 'emit');
+
+      const canceledOrder: Order = {
+        ...ORDER_MOCK,
+        status: 'canceled',
+      };
+
+      jest
+        .spyOn(cancelOrderUseCase, 'execute')
+        .mockReturnValueOnce(Promise.resolve(canceledOrder));
+
+      await sut.cancelOrder({ id: 'fakeId' });
+
+      expect(clientKafkaSpy).toHaveBeenCalledTimes(1);
+      expect(clientKafkaSpy).toHaveBeenCalledWith(
+        'order.canceled',
+        canceledOrder,
+      );
+    });
   });
 
   describe('updateOrder', () => {
@@ -178,6 +200,24 @@ describe('OrdersController', () => {
         expect(error).toBeInstanceOf(HttpException);
         expect(error.message).toBe(new ProductDontExists().message);
       }
+    });
+
+    test('Should publish message on kafka client on success', async () => {
+      const clientKafkaSpy = jest.spyOn(clientKafka, 'emit');
+
+      jest
+        .spyOn(getProductsByIdsUseCase, 'execute')
+        .mockReturnValueOnce(Promise.resolve(PRODUCTS_MOCK));
+
+      await sut.update(
+        { products: ['id_1', 'id_2', 'id_3'] },
+        { id: 'fakeId' },
+      );
+
+      expect(clientKafkaSpy).toHaveBeenCalledTimes(1);
+      expect(clientKafkaSpy).toHaveBeenCalledWith('order.updated', {
+        addedProducts: PRODUCTS_MOCK,
+      });
     });
   });
 
