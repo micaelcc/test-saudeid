@@ -11,16 +11,18 @@ class OrdersRepositoryStub implements OrdersRepository {
     this.orders = [];
   }
 
-  create(order: CreateOrderDTO): Promise<void> {
-    this.orders.push({
+  create(order: CreateOrderDTO): Promise<Order> {
+    const data = {
       ...order,
       updatedAt: new Date(),
       createdAt: new Date(),
       deletedAt: null,
       id: randomUUID(),
-    });
+    };
 
-    return;
+    this.orders.push(data);
+
+    return Promise.resolve(data);
   }
 
   update(updateOrder: Order): Promise<void> {
