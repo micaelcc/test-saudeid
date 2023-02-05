@@ -12,8 +12,24 @@ import { GetProductsByIdsUseCase } from '@/use-cases/get-products-by-ids.usecase
 import { CancelOrderUseCase } from '@/use-cases/cancel-order.usecase';
 import { UpdateOrderUseCase } from '@/use-cases/update-order.usecase';
 import { GetOrdersUseCase } from '@/use-cases/get-orders.usecase';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { kafkaConfig } from './infra/event-streaming/kafka/config';
+
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig)],
+  imports: [
+    TypeOrmModule.forRoot(typeOrmConfig),
+    ClientsModule.register([
+      {
+        transport: Transport.KAFKA,
+        name: kafkaConfig.serverName,
+        options: {
+          client: {
+            brokers: [kafkaConfig.url],
+          },
+        },
+      },
+    ]),
+  ],
   controllers: [OrdersController],
   providers: [
     CreateOrderUseCase,
