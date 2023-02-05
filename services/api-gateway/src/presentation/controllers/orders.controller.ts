@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpException,
   HttpStatus,
+  Inject,
   Param,
   Patch,
   Post,
@@ -20,6 +21,8 @@ import { CreateOrderValidator } from '../validators/create-order.validator';
 import { Order } from '@/domain/orders/order.entity';
 import { GetOrdersUseCase } from '@/use-cases/get-orders.usecase';
 import { GetOrdersValidator } from '../validators/get-orders.validator';
+import { ClientKafka } from '@nestjs/microservices';
+import { kafkaConfig } from '@/infra/event-streaming/kafka/config';
 
 type CancelOrderRequest = {
   id: string;
@@ -35,6 +38,7 @@ class OrdersController {
     private cancelOrderUseCase: CancelOrderUseCase,
     private updateOrderUseCase: UpdateOrderUseCase,
     private getOrdersUseCase: GetOrdersUseCase,
+    @Inject(kafkaConfig.serverName) private readonly kafka: ClientKafka,
   ) {}
 
   @Post()
@@ -47,7 +51,9 @@ class OrdersController {
         throw new ProductDontExists();
       }
 
-      await this.createOrderUseCase.execute(products);
+      const order = await this.createOrderUseCase.execute(products);
+
+      this.kafka.emit('order.created', order);
     } catch (error) {
       throw new HttpException(
         error.message,
