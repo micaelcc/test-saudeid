@@ -102,6 +102,20 @@ describe('OrdersController', () => {
         expect(error.message).toBe(new ProductDontExists().message);
       }
     });
+
+    test('Should publish message on kafka client on success', async () => {
+      const clientKafkaSpy = jest.spyOn(clientKafka, 'emit');
+
+      jest
+        .spyOn(createOrderUseCase, 'execute')
+        .mockReturnValueOnce(Promise.resolve(ORDER_MOCK));
+
+      const ids = ['specified_id'];
+      await sut.create({ products: ids });
+
+      expect(clientKafkaSpy).toHaveBeenCalledTimes(1);
+      expect(clientKafkaSpy).toHaveBeenCalledWith('order.created', ORDER_MOCK);
+    });
   });
 
   describe('cancelOrder', () => {
