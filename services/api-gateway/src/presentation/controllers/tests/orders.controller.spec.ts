@@ -12,6 +12,7 @@ import { ORDERS_MOCK } from '@/infra/db/typeorm/repositories/tests/mocks/orders'
 import { UpdateOrderUseCase } from '@/use-cases/update-order.usecase';
 import { GetOrdersUseCase } from '@/use-cases/get-orders.usecase';
 import { GetOrdersValidator } from '@/presentation/validators/get-orders.validator';
+import { ClientKafka } from '@nestjs/microservices';
 
 describe('OrdersController', () => {
   let sut: OrdersController;
@@ -23,6 +24,7 @@ describe('OrdersController', () => {
   let cancelOrderUseCase: CancelOrderUseCase;
   let updateOrderUseCase: UpdateOrderUseCase;
   let getOrdersUseCase: GetOrdersUseCase;
+  let clientKafka: ClientKafka;
 
   beforeEach(() => {
     ordersRepositoryStub = new OrdersRepositoryStub();
@@ -44,13 +46,18 @@ describe('OrdersController', () => {
 
     getOrdersUseCase = new GetOrdersUseCase(ordersRepositoryStub);
 
+    clientKafka = new ClientKafka({});
+
     sut = new OrdersController(
       createOrderUseCase,
       getProductsByIdsUseCase,
       cancelOrderUseCase,
       updateOrderUseCase,
       getOrdersUseCase,
+      clientKafka,
     );
+
+    jest.spyOn(clientKafka, 'emit').mockImplementationOnce(jest.fn());
   });
 
   describe('create', () => {
