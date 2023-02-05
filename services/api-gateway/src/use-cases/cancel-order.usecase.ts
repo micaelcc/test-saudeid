@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { OrdersRepository } from '@/domain/orders/order.repository';
+import { Order } from '@/domain/orders/order.entity';
 
 class CancelOrderUseCase {
   constructor(
@@ -8,7 +9,7 @@ class CancelOrderUseCase {
     private readonly ordersRepository: OrdersRepository,
   ) {}
 
-  async execute(id: string): Promise<void> {
+  async execute(id: string): Promise<Order> {
     const order = await this.ordersRepository.findById(id);
 
     if (!order) {
@@ -18,6 +19,8 @@ class CancelOrderUseCase {
     order.status = 'canceled';
 
     await this.ordersRepository.update(order);
+
+    return order;
   }
 }
 

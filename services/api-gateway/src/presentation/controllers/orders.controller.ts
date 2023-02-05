@@ -68,7 +68,9 @@ class OrdersController {
     try {
       const { id } = params;
 
-      await this.cancelOrderUseCase.execute(id);
+      const canceledOrder = await this.cancelOrderUseCase.execute(id);
+
+      this.kafka.emit('order.canceled', canceledOrder);
     } catch (error) {
       throw new HttpException(
         error.message,
