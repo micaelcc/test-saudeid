@@ -205,9 +205,14 @@ describe('OrdersController', () => {
     test('Should publish message on kafka client on success', async () => {
       const clientKafkaSpy = jest.spyOn(clientKafka, 'emit');
 
+      const updatedOrder: Order = { ...ORDER_MOCK, products: PRODUCTS_MOCK };
       jest
         .spyOn(getProductsByIdsUseCase, 'execute')
         .mockReturnValueOnce(Promise.resolve(PRODUCTS_MOCK));
+
+      jest
+        .spyOn(updateOrderUseCase, 'execute')
+        .mockReturnValueOnce(Promise.resolve(updatedOrder));
 
       await sut.update(
         { products: ['id_1', 'id_2', 'id_3'] },
@@ -215,9 +220,10 @@ describe('OrdersController', () => {
       );
 
       expect(clientKafkaSpy).toHaveBeenCalledTimes(1);
-      expect(clientKafkaSpy).toHaveBeenCalledWith('order.updated', {
-        addedProducts: PRODUCTS_MOCK,
-      });
+      expect(clientKafkaSpy).toHaveBeenCalledWith(
+        'order.updated',
+        updatedOrder,
+      );
     });
   });
 

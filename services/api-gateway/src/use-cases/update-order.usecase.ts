@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { UpdateOrderDTO } from '@/shared/dtos/update-order.dto';
 
 import { OrdersRepository } from '@/domain/orders/order.repository';
+import { Order } from '@/domain/orders/order.entity';
 
 class UpdateOrderUseCase {
   constructor(
@@ -9,7 +10,7 @@ class UpdateOrderUseCase {
     private readonly ordersRepository: OrdersRepository,
   ) {}
 
-  async execute({ id, data }: UpdateOrderDTO): Promise<void> {
+  async execute({ id, data }: UpdateOrderDTO): Promise<Order> {
     const order = await this.ordersRepository.findById(id);
 
     if (!order) {
@@ -26,6 +27,8 @@ class UpdateOrderUseCase {
     order.totalValue = totalValue;
 
     await this.ordersRepository.update(order);
+
+    return order;
   }
 }
 

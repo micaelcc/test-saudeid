@@ -94,14 +94,12 @@ class OrdersController {
 
       const { id } = params;
 
-      await this.updateOrderUseCase.execute({
+      const updatedOrder = await this.updateOrderUseCase.execute({
         id,
         data: { products },
       });
 
-      this.kafka.emit('order.updated', {
-        addedProducts: products,
-      });
+      this.kafka.emit('order.updated', updatedOrder);
     } catch (error) {
       throw new HttpException(
         error.message,
