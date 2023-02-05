@@ -98,6 +98,10 @@ class OrdersController {
         id,
         data: { products },
       });
+
+      this.kafka.emit('order.updated', {
+        addedProducts: products,
+      });
     } catch (error) {
       throw new HttpException(
         error.message,
