@@ -9,8 +9,8 @@ import { EntityManager, In } from 'typeorm';
 class TypeOrmProductsRepository implements ProductsRepository {
   constructor(@InjectEntityManager() private readonly manager: EntityManager) {}
 
-  async create(data: CreateProductDTO): Promise<void> {
-    await this.manager.save(Product, data);
+  async create(data: CreateProductDTO): Promise<Product> {
+    return this.manager.save(Product, data);
   }
 
   async getAll(): Promise<Product[]> {

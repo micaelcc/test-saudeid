@@ -9,17 +9,19 @@ class ProductsRepositoryStub implements ProductsRepository {
     this.products = [];
   }
 
-  create(product: CreateProductDTO): Promise<void> {
-    this.products.push({
+  create(product: CreateProductDTO): Promise<Product> {
+    const newProduct = {
       createdAt: new Date(),
       updatedAt: new Date(),
       deletedAt: null,
       id: 'specified_id',
       name: product.name,
       unitPrice: product.unitPrice,
-    });
+    };
 
-    return;
+    this.products.push(newProduct);
+
+    return Promise.resolve(newProduct);
   }
 
   getAll(): Promise<Product[]> {
