@@ -11,6 +11,11 @@ export type CreateProductRequest = {
   availableItems: number;
 };
 
+export type UpdateStockRequest = {
+  orderId: string;
+  products: Product[];
+};
+
 @Controller()
 export class ManagerController {
   constructor(
@@ -19,9 +24,9 @@ export class ManagerController {
   ) {}
 
   @MessagePattern('order.created')
-  async orderCreated(order: Order): Promise<void> {
+  async orderCreated(data: UpdateStockRequest): Promise<void> {
     const payload = {
-      addedProducts: order.products,
+      addedProducts: data.products,
       removedProducts: [],
     };
 
@@ -29,9 +34,9 @@ export class ManagerController {
   }
 
   @MessagePattern('order.updated')
-  async orderUpdated(order: Order): Promise<void> {
+  async orderUpdated(data: UpdateStockRequest): Promise<void> {
     const payload = {
-      addedProducts: order.products,
+      addedProducts: data.products,
       removedProducts: [],
     };
 
@@ -39,10 +44,10 @@ export class ManagerController {
   }
 
   @MessagePattern('order.canceled')
-  async orderCanceled(order: Order): Promise<void> {
+  async orderCanceled(data: UpdateStockRequest): Promise<void> {
     const payload = {
       addedProducts: [],
-      removedProducts: order.products,
+      removedProducts: data.products,
     };
 
     return this.updateStockService.execute(payload);
