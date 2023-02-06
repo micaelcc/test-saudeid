@@ -6,6 +6,11 @@ import { UpdateStockService } from '@/services/update-stock.service';
 import { CreateProductService } from '@/services/create-product.service';
 import { Product } from '@/entities/product';
 
+export type CreateProductRequest = {
+  product: Product;
+  availableItems: number;
+};
+
 @Controller()
 export class ManagerController {
   constructor(
@@ -15,26 +20,36 @@ export class ManagerController {
 
   @MessagePattern('order.created')
   async orderCreated(order: Order): Promise<void> {
-    console.log(order);
-    await this.updateStockService.execute(order);
-    return;
+    const payload = {
+      addedProducts: order.products,
+      removedProducts: [],
+    };
+
+    return this.updateStockService.execute(payload);
   }
 
   @MessagePattern('order.updated')
   async orderUpdated(order: Order): Promise<void> {
-    await this.updateStockService.execute(order);
-    return;
+    const payload = {
+      addedProducts: order.products,
+      removedProducts: [],
+    };
+
+    return this.updateStockService.execute(payload);
   }
 
   @MessagePattern('order.canceled')
   async orderCanceled(order: Order): Promise<void> {
-    await this.updateStockService.execute(order);
-    return;
+    const payload = {
+      addedProducts: [],
+      removedProducts: order.products,
+    };
+
+    return this.updateStockService.execute(payload);
   }
 
   @MessagePattern('product.created')
-  async productCreated(product: Product): Promise<void> {
-    await this.createProductService.execute(product);
-    return;
+  async productCreated(data: CreateProductRequest): Promise<void> {
+    return this.createProductService.execute(data);
   }
 }

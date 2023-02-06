@@ -1,11 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { Product } from '@/entities/product';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { CreateProductRequest } from '@/controllers/manager.controller';
 
 @Injectable()
 export class CreateProductService {
-  execute(product: Product): Promise<void> {
-    //to do
-    console.log('call stock microservice to att stock');
+  constructor(
+    @Inject('STOCK_SERVICE') private readonly stockService: ClientProxy,
+  ) {}
+
+  execute(data: CreateProductRequest): Promise<void> {
+    this.stockService.emit('createProduct', data);
 
     return;
   }
