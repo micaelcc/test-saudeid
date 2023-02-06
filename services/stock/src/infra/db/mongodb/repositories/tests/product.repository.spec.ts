@@ -36,4 +36,30 @@ describe('ProductsRepository', () => {
       });
     });
   });
+
+  describe('updateMany', () => {
+    it('Should call collection().updateMany with correct values', async () => {
+      const updateManySpy = jest
+        .spyOn(connection.collection('products'), 'updateMany')
+        .mockImplementationOnce(jest.fn());
+
+      const ids = ['id_1', 'id_2'];
+
+      await sut.updateMany(ids, 'decrement');
+
+      expect(updateManySpy).toHaveBeenCalledTimes(1);
+      expect(updateManySpy).toHaveBeenCalledWith(
+        {
+          productId: {
+            $in: ids,
+          },
+        },
+        {
+          $inc: {
+            availableItems: -1,
+          },
+        },
+      );
+    });
+  });
 });
