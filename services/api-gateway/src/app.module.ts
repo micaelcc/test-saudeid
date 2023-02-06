@@ -14,6 +14,8 @@ import { UpdateOrderUseCase } from '@/use-cases/update-order.usecase';
 import { GetOrdersUseCase } from '@/use-cases/get-orders.usecase';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { kafkaConfig } from './infra/event-streaming/kafka/config';
+import { ProductsController } from './presentation/controllers/products.controller';
+import { CreateProductUseCase } from './use-cases/create-product.usecase';
 
 @Module({
   imports: [
@@ -30,13 +32,14 @@ import { kafkaConfig } from './infra/event-streaming/kafka/config';
       },
     ]),
   ],
-  controllers: [OrdersController],
+  controllers: [OrdersController, ProductsController],
   providers: [
     CreateOrderUseCase,
     GetProductsByIdsUseCase,
     CancelOrderUseCase,
     UpdateOrderUseCase,
     GetOrdersUseCase,
+    CreateProductUseCase,
     { provide: OrdersRepository, useClass: TypeOrmOrderRepository },
     { provide: ProductsRepository, useClass: TypeOrmProductsRepository },
   ],
