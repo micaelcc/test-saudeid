@@ -59,6 +59,11 @@
       "json",
       "ts"
     ],
+    "moduleNameMapper": {
+      "@/controllers/(.*)": "<rootDir>/controllers/$1",
+      "@/services/(.*)": "<rootDir>/services/$1",
+      "@/entities/(.*)": "<rootDir>/entities/$1"
+    },
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
