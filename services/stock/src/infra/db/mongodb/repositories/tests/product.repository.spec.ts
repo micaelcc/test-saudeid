@@ -7,6 +7,7 @@ describe('ProductsRepository', () => {
   let connection: Connection;
 
   beforeAll(async () => {
+    mongoose.set('strictQuery', false);
     await mongoose.connect(mongodbConfig.MONGO_URL_TEST, {});
     connection = mongoose.connection;
 
