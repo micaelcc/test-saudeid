@@ -43,7 +43,7 @@ class OrdersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  public async create(@Body() data: CreateOrderValidator): Promise<void> {
+  public async create(@Body() data: CreateOrderValidator): Promise<Order> {
     try {
       const products = await this.getProductsByIds.execute(data.products);
 
@@ -57,6 +57,8 @@ class OrdersController {
         orderId: order.id,
         products: order.products,
       });
+
+      return order;
     } catch (error) {
       throw new HttpException(
         error.message,
