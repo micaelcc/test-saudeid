@@ -1,4 +1,7 @@
-import { ProductsRepository } from '@/domain/product.repository';
+import {
+  ProductsRepository,
+  UpdateStockAction,
+} from '@/domain/product.repository';
 import { Product } from '@/domain/product.schema';
 
 class ProductsRepositoryStub implements ProductsRepository {
@@ -15,8 +18,15 @@ class ProductsRepositoryStub implements ProductsRepository {
     });
   }
 
-  async update(data: Product): Promise<void> {
-    return;
+  async updateMany(ids: string[], action: UpdateStockAction): Promise<void> {
+    this.products.map((product) => {
+      if (ids.includes(product.productId)) {
+        product.availableItems =
+          action === 'decrement'
+            ? product.availableItems - 1
+            : product.availableItems + 1;
+      }
+    });
   }
 }
 

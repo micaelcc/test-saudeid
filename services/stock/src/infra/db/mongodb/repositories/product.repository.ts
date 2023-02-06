@@ -4,19 +4,29 @@ import { Connection } from 'mongoose';
 import { ProductsRepository } from '@/domain/product.repository';
 import { Product } from '@/domain/product.schema';
 
+type UpdateStockAction = 'decrement' | 'increment';
+
 @Injectable()
 class MongoProductsRepository implements ProductsRepository {
   constructor(@InjectConnection() private connection: Connection) {}
 
   async create(data: Product): Promise<void> {
     await this.connection.collection('products').insertOne(data);
-
-    return;
   }
 
-  async update(data: Product): Promise<void> {
-    //to do
-    return;
+  async updateMany(ids: string[], action: UpdateStockAction): Promise<void> {
+    await this.connection.collection('products').updateMany(
+      {
+        productId: {
+          $in: ids,
+        },
+      },
+      {
+        $inc: {
+          availableItems: action === 'decrement' ? -1 : 1,
+        },
+      },
+    );
   }
 }
 
