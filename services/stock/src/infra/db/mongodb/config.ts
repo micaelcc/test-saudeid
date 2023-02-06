@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 
-config();
+config({ path: '.env.dev' });
 
 export const mongodbConfig = {
   MONGO_URL_TEST: process.env.MONGO_URL,

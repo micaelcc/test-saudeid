@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 
-config();
+config({ path: '.env.dev' });
 
 const connectionOptions = {
   host: process.env.DATABASE_HOST,

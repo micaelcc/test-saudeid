@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 
-config();
+config({ path: '.env.dev' });
 
 export const kafkaConfig = {
   serverName: process.env.KAFKA_SERVER_NAME,
