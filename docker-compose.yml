@@ -75,13 +75,25 @@ services:
       - test-saudeid-network
 
   mongo:
-    container_name: mongo-container
+    container_name: stock-ms-mongo-db
     image: mongo:3
     restart: always
     environment:
       - MONGO_INITDB_DATABASE=stock-db
     ports:
       - "27017:27017"
+    networks:
+      - test-saudeid-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=dev@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=123
+    ports:
+      - "25432:80"
+    depends_on:
+      - api-gateway-database
     networks:
       - test-saudeid-network
 
