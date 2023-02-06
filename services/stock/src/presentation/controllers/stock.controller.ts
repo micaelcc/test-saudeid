@@ -27,7 +27,7 @@ export class StockController {
   }
 
   @MessagePattern('createProduct')
-  create(data: CreateProductRequest): string {
+  async create(data: CreateProductRequest): Promise<void> {
     return this.createProductService.execute(data);
   }
 }
