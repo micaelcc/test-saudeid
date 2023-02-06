@@ -115,7 +115,10 @@ describe('OrdersController', () => {
       await sut.create({ products: ids });
 
       expect(clientKafkaSpy).toHaveBeenCalledTimes(1);
-      expect(clientKafkaSpy).toHaveBeenCalledWith('order.created', ORDER_MOCK);
+      expect(clientKafkaSpy).toHaveBeenCalledWith('order.created', {
+        orderId: ORDER_MOCK.id,
+        products: ORDER_MOCK.products,
+      });
     });
   });
 
@@ -123,9 +126,9 @@ describe('OrdersController', () => {
     test('Should call cancelOrder usecase with correct values', async () => {
       const cancelOrderUseCaseSpy = jest
         .spyOn(cancelOrderUseCase, 'execute')
-        .mockImplementationOnce(jest.fn());
+        .mockReturnValueOnce(Promise.resolve(ORDER_MOCK));
 
-      const fakeId = randomUUID();
+      const fakeId = ORDER_MOCK.id;
 
       await sut.cancelOrder({ id: fakeId });
 
@@ -148,10 +151,10 @@ describe('OrdersController', () => {
       await sut.cancelOrder({ id: 'fakeId' });
 
       expect(clientKafkaSpy).toHaveBeenCalledTimes(1);
-      expect(clientKafkaSpy).toHaveBeenCalledWith(
-        'order.canceled',
-        canceledOrder,
-      );
+      expect(clientKafkaSpy).toHaveBeenCalledWith('order.canceled', {
+        orderId: canceledOrder.id,
+        products: canceledOrder.products,
+      });
     });
   });
 
@@ -170,7 +173,9 @@ describe('OrdersController', () => {
     });
 
     test('Should call update order use case with correct values', async () => {
-      const updateOrderUseCaseSpy = jest.spyOn(updateOrderUseCase, 'execute');
+      const updateOrderUseCaseSpy = jest
+        .spyOn(updateOrderUseCase, 'execute')
+        .mockReturnValueOnce(Promise.resolve(ORDER_MOCK));
 
       jest
         .spyOn(getProductsByIdsUseCase, 'execute')
@@ -220,10 +225,10 @@ describe('OrdersController', () => {
       );
 
       expect(clientKafkaSpy).toHaveBeenCalledTimes(1);
-      expect(clientKafkaSpy).toHaveBeenCalledWith(
-        'order.updated',
-        updatedOrder,
-      );
+      expect(clientKafkaSpy).toHaveBeenCalledWith('order.updated', {
+        orderId: updatedOrder.id,
+        products: updatedOrder.products,
+      });
     });
   });
 

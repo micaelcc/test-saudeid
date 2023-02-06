@@ -53,7 +53,10 @@ class OrdersController {
 
       const order = await this.createOrderUseCase.execute(products);
 
-      this.kafka.emit('order.created', order);
+      this.kafka.emit('order.created', {
+        orderId: order.id,
+        products: order.products,
+      });
     } catch (error) {
       throw new HttpException(
         error.message,
@@ -70,7 +73,10 @@ class OrdersController {
 
       const canceledOrder = await this.cancelOrderUseCase.execute(id);
 
-      this.kafka.emit('order.canceled', canceledOrder);
+      this.kafka.emit('order.canceled', {
+        orderId: canceledOrder.id,
+        products: canceledOrder.products,
+      });
     } catch (error) {
       throw new HttpException(
         error.message,
@@ -99,7 +105,10 @@ class OrdersController {
         data: { products },
       });
 
-      this.kafka.emit('order.updated', updatedOrder);
+      this.kafka.emit('order.updated', {
+        orderId: updatedOrder.id,
+        products: updatedOrder.products,
+      });
     } catch (error) {
       throw new HttpException(
         error.message,
