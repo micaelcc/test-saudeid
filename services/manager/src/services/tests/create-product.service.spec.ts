@@ -4,7 +4,7 @@ import { StockClientStub } from './mocks/stock-client-stub';
 
 describe('CreateProductService', () => {
   let sut: CreateProductService;
-  const [PRODUCK_MOCK] = PRODUCTS_MOCK;
+  const [PRODUCT_MOCK] = PRODUCTS_MOCK;
   let stockClient: StockClientStub;
 
   beforeAll(() => {
@@ -17,7 +17,7 @@ describe('CreateProductService', () => {
 
     const createProduct = {
       availableItems: 10,
-      product: PRODUCK_MOCK,
+      product: PRODUCT_MOCK,
     };
 
     await sut.execute(createProduct);
