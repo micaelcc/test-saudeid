@@ -24,7 +24,7 @@ describe('ProductsController', () => {
 
   describe('create', () => {
     test('Should call create product use case with correct values', async () => {
-      const getProductsUseCaseSpyOn = jest.spyOn(
+      const createProductUseCaseSpyOn = jest.spyOn(
         createProductUseCase,
         'execute',
       );
@@ -37,8 +37,8 @@ describe('ProductsController', () => {
 
       await sut.create(fakeProductRequest);
 
-      expect(getProductsUseCaseSpyOn).toHaveBeenCalledTimes(1);
-      expect(getProductsUseCaseSpyOn).toHaveBeenCalledWith({
+      expect(createProductUseCaseSpyOn).toHaveBeenCalledTimes(1);
+      expect(createProductUseCaseSpyOn).toHaveBeenCalledWith({
         name: fakeProductRequest.name,
         unitPrice: fakeProductRequest.unitPrice,
       });
