@@ -37,26 +37,26 @@ $ docker-compose -f docker-compose.yml up -d --build
 ##### instalar dependencias
 
 ```bash
-yarn install
+$ yarn install
 ```
 
 ##### api-gateway
 
 ```bash
-    $ cd services/api-gateway
-    $ yarn tests
+$ cd services/api-gateway
+$ yarn tests
 ```
 
 ##### manager
 
 ```bash
-    $ cd services/manager
-    $ yarn tests
+$ cd services/manager
+$ yarn tests
 ```
 
 ##### stock
 
 ```bash
-    $ cd services/stock
-    $ yarn tests
+$ cd services/stock
+$ yarn tests
 ```
