@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
-import { ProductsRepository } from 'src/domain/product.repository';
-import { Product } from 'src/domain/product.schema';
+import { ProductsRepository } from '@/domain/product.repository';
+import { Product } from '@/domain/product.schema';
 
 @Injectable()
 class MongoProductsRepository implements ProductsRepository {

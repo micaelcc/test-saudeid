@@ -1,8 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { Product } from 'src/shared/dtos/product';
-import { CreateProductUseCase } from 'src/use-cases/create-product.usecase';
-import { UpdateStockUseCase } from 'src/use-cases/update-stock.usecase';
+import { Product } from '@/shared/dtos/product';
+import { CreateProductUseCase } from '@/use-cases/create-product.usecase';
+import { UpdateStockUseCase } from '@/use-cases/update-stock.usecase';
 
 export type UpdateStockRequest = {
   addedProducts: Product[];

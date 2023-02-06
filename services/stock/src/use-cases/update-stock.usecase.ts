@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UpdateStockRequest } from 'src/presentation/controllers/stock.controller';
+import { UpdateStockRequest } from '@/presentation/controllers/stock.controller';
 
-import { ProductsRepository } from 'src/domain/product.repository';
+import { ProductsRepository } from '@/domain/product.repository';
 
 @Injectable()
 export class UpdateStockUseCase {

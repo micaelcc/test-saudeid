@@ -1,5 +1,5 @@
-import { ProductsRepository } from 'src/domain/product.repository';
-import { Product } from 'src/domain/product.schema';
+import { ProductsRepository } from '@/domain/product.repository';
+import { Product } from '@/domain/product.schema';
 
 class ProductsRepositoryStub implements ProductsRepository {
   private readonly products: Product[];

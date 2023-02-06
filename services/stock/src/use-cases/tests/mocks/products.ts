@@ -1,5 +1,4 @@
-import { randomUUID } from 'crypto';
-import { Product } from 'src/shared/dtos/product';
+import { Product } from '@/shared/dtos/product';
 
 export const PRODUCTS_MOCK: Product[] = [
   {
