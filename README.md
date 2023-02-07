@@ -41,7 +41,7 @@ http://localhost:3000/api
 ```
 
 ```
-ou se preferir, pode utilizar o Insomnia.
+ou se preferir, pode utilizar o Insomnia (lembrar de setar para 'debug' depois de importar).
 ```
 
 ### Rodando testes unitarios de cada serviço
