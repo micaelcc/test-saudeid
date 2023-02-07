@@ -34,18 +34,23 @@
 $ docker-compose -f docker-compose.yml up -d --build
 ```
 
-### Rodando testes unitarios de cada serviço
+## Documentação no navegador com Swagger
 
-##### instalar dependencias
-
-```bash
-$ yarn install
 ```
+http://localhost:3000/api
+```
+
+```
+ou se preferir, pode utilizar o Insomnia.
+```
+
+### Rodando testes unitarios de cada serviço
 
 ##### api-gateway
 
 ```bash
 $ cd services/api-gateway
+$ yarn install
 $ yarn test:unit
 ```
 
@@ -53,6 +58,7 @@ $ yarn test:unit
 
 ```bash
 $ cd services/manager
+$ yarn install
 $ yarn test
 ```
 
@@ -60,6 +66,7 @@ $ yarn test
 
 ```bash
 $ cd services/stock
+$ yarn install
 $ yarn test
 ```
 
