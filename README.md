@@ -49,12 +49,24 @@ ou se preferir, pode utilizar o Insomnia (lembrar de setar para 'debug' depois d
 ##### api-gateway
 
 ```bash
+docker exec -it test-saudeid_api-gateway_1 yarn test:unit
+```
+
+ou
+
+```bash
 $ cd services/api-gateway
 $ yarn install
 $ yarn test:unit
 ```
 
 ##### manager
+
+```bash
+docker exec -it test-saudeid_manager-ms_1 yarn test
+```
+
+ou
 
 ```bash
 $ cd services/manager
@@ -64,18 +76,8 @@ $ yarn test
 
 ##### stock
 
-###### Adicionar variável de ambiente para download do Mongo Memory Server
-
 ```bash
-$ export MONGOMS_DOWNLOAD_URL=https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.2.8.tgz
-```
-
-###### Rodar testes
-
-```bash
-$ cd services/stock
-$ yarn install
-$ yarn test
+docker exec -it test-saudeid_stock-ms_1 yarn test
 ```
 
 ### Rodando testes de integração
@@ -96,5 +98,6 @@ $ docker run --name database-test -e POSTGRES_PASSWORD=database-test-pass -e POS
 
 ```bash
 $ cd services/api-gateway
+$ yarn install
 $ yarn test:integration
 ```
