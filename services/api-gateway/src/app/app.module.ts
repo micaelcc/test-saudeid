@@ -13,9 +13,9 @@ import { CancelOrderUseCase } from '@/use-cases/cancel-order.usecase';
 import { UpdateOrderUseCase } from '@/use-cases/update-order.usecase';
 import { GetOrdersUseCase } from '@/use-cases/get-orders.usecase';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { kafkaConfig } from './infra/event-streaming/kafka/config';
-import { ProductsController } from './presentation/controllers/products.controller';
-import { CreateProductUseCase } from './use-cases/create-product.usecase';
+import { kafkaConfig } from '@/infra/event-streaming/kafka/config';
+import { ProductsController } from '@/presentation/controllers/products.controller';
+import { CreateProductUseCase } from '@/use-cases/create-product.usecase';
 
 @Module({
   imports: [
