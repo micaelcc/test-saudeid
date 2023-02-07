@@ -1,5 +1,7 @@
 # back-end test saude-id
 
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Teste%20SaudeId&uri=https%3A%2F%2Fgithub.com%2Fmicaelcc%2Ftest-saudeid%2Fblob%2Fmain%2Fdocs%2Fapi-gateway-routes.json)
+
 ## Serviços
 
 ![](.github/services.png)
@@ -51,17 +53,23 @@ $ yarn test:unit
 
 ```bash
 $ cd services/manager
-$ yarn tests
+$ yarn test
 ```
 
 ##### stock
 
 ```bash
 $ cd services/stock
-$ yarn tests
+$ yarn test
 ```
 
 ### Rodando testes de integração
+
+##### Parar docker-compose da aplicação
+
+```bash
+$ docker-compose down
+```
 
 ##### Criar container postgres de teste
 
