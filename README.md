@@ -32,7 +32,7 @@
 $ docker-compose -f docker-compose.yml up -d --build
 ```
 
-### Rodando testes de cada serviço
+### Rodando testes unitarios de cada serviço
 
 ##### instalar dependencias
 
@@ -44,7 +44,7 @@ $ yarn install
 
 ```bash
 $ cd services/api-gateway
-$ yarn tests
+$ yarn test:unit
 ```
 
 ##### manager
@@ -59,4 +59,19 @@ $ yarn tests
 ```bash
 $ cd services/stock
 $ yarn tests
+```
+
+### Rodando testes de integração
+
+##### Criar container postgres de teste
+
+```bash
+$ docker run --name database-test -e POSTGRES_PASSWORD=database-test-pass -e POSTGRES_USER=database-test -e POSTGRES_DATABASE=database-test -p 5433:5432 -d postgres
+```
+
+##### Rodar testes
+
+```bash
+$ cd services/api-gateway
+$ yarn test:integration
 ```
