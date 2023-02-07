@@ -23,6 +23,16 @@ import { GetOrdersUseCase } from '@/use-cases/get-orders.usecase';
 import { GetOrdersValidator } from '../validators/get-orders.validator';
 import { ClientKafka } from '@nestjs/microservices';
 import { kafkaConfig } from '@/infra/event-streaming/kafka/config';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiBody,
+  ApiProperty,
+  ApiOperation,
+  ApiNoContentResponse,
+  ApiParam,
+  ApiQuery,
+} from '@nestjs/swagger';
 
 type CancelOrderRequest = {
   id: string;
@@ -43,6 +53,10 @@ class OrdersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @ApiCreatedResponse({ type: Order, isArray: false })
+  @ApiProperty({ type: Order })
+  @ApiOperation({ summary: 'create new order' })
+  @ApiBody({ type: CreateOrderValidator, description: 'array of uuid strings' })
   public async create(@Body() data: CreateOrderValidator): Promise<Order> {
     try {
       const products = await this.getProductsByIds.execute(data.products);
@@ -69,6 +83,10 @@ class OrdersController {
 
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse({})
+  @ApiProperty({ type: Order })
+  @ApiOperation({ summary: 'cancel order by id' })
+  @ApiParam({ name: 'id', description: 'provides a order id' })
   public async cancelOrder(@Param() params: CancelOrderRequest): Promise<void> {
     try {
       const { id } = params;
@@ -89,6 +107,11 @@ class OrdersController {
 
   @Put(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiNoContentResponse({})
+  @ApiProperty({ type: Order })
+  @ApiOperation({ summary: 'update order' })
+  @ApiBody({ type: CreateOrderValidator, description: 'array of uuid strings' })
+  @ApiParam({ name: 'id', description: 'provides a order id' })
   public async update(
     @Body() data: CreateOrderValidator,
     @Param() params: UpdateOrderRequest,
@@ -121,6 +144,19 @@ class OrdersController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: Order, isArray: true })
+  @ApiProperty({ type: Order })
+  @ApiOperation({ summary: 'get all orders' })
+  @ApiQuery({
+    name: 'orderBy',
+    required: false,
+    example: 'createdAt',
+  })
+  @ApiQuery({
+    name: 'status',
+    required: false,
+    example: 'canceled',
+  })
   public async getAll(@Query() params: GetOrdersValidator): Promise<Order[]> {
     return this.getOrdersUseCase.execute({ filters: { ...params } });
   }

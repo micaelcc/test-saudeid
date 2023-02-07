@@ -13,6 +13,12 @@ import { kafkaConfig } from '@/infra/event-streaming/kafka/config';
 import { CreateProductUseCase } from '@/use-cases/create-product.usecase';
 import { CreateProductValidator } from '../validators/create-product.validator';
 import { Product } from '@/domain/products/product.entity';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiProperty,
+} from '@nestjs/swagger';
 
 @Controller('/products')
 class ProductsController {
@@ -23,6 +29,13 @@ class ProductsController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @ApiCreatedResponse({ type: Product, isArray: false })
+  @ApiProperty({ type: Product })
+  @ApiOperation({ summary: 'create new product' })
+  @ApiBody({
+    type: CreateProductValidator,
+    description: 'create product payload',
+  })
   public async create(@Body() data: CreateProductValidator): Promise<Product> {
     try {
       const product = await this.createProductUseCase.execute({
