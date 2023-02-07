@@ -10,6 +10,4 @@ COPY . .
 
 EXPOSE 3003
 
-RUN export MONGOMS_DOWNLOAD_URL=https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.2.8.tgz
-
 CMD [ "yarn", "start:dev" ]
