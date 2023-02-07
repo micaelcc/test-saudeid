@@ -64,6 +64,14 @@ $ yarn test
 
 ##### stock
 
+###### Adicionar variável de ambiente para download do Mongo Memory Server
+
+```bash
+$ export MONGOMS_DOWNLOAD_URL=https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1804-4.2.8.tgz
+```
+
+###### Rodar testes
+
 ```bash
 $ cd services/stock
 $ yarn install
